@@ -36,7 +36,7 @@ public class MaxTest {
     @Test
     public void whenSetMax8_9_2ThenMax9() {
         Max maximum = new Max();
-        int result = maximum.max(8,9,10);
-        assertThat(result, is(10));
+        int result = maximum.max(8,9,2);
+        assertThat(result, is(9));
     }
 }
