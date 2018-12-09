@@ -32,4 +32,11 @@ public class MaxTest {
         int result = maximum.max(19, 19);
         assertThat(result, is(19));
     }
+
+    @Test
+    public void whenSetMax8_9_2ThenMax9() {
+        Max maximum = new Max();
+        int result = maximum.max(8,9,2);
+        assertThat(result, is(9));
+    }
 }
