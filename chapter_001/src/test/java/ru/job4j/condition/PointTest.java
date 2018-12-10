@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class PointTest {
 
     @Test
-    public void whenPoint2_2AndPoint5_6ThenDistance5() {
+    public void whenPoint22AndPoint56ThenDistance5() {
         Point a = new Point(2, 2);
         Point b = new Point(5, 6);
         double dist = a.distanceTo(b);
