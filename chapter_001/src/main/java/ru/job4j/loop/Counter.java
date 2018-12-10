@@ -1,7 +1,7 @@
 package ru.job4j.loop;
 
 /**
- * Test.
+ * Counter.
  *
  * @author Roman Korolchuk (rom.kor@yandex.ru)
  * @version $Id$
