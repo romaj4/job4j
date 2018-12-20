@@ -46,8 +46,14 @@ public class Tracker {
      * @param id   уникальный ключ.
      * @param item новая заявка.
      */
-    public void replace(String id, Item item) {
-        this.items[this.findPositionById(id)] = item;
+    public boolean replace(String id, Item item) {
+        boolean result = false;
+        if (this.findPositionById(id) != -1) {
+            item.setId(this.items[this.findPositionById(id)].getId());
+            this.items[this.findPositionById(id)] = item;
+            result = true;
+        }
+        return result;
     }
 
     /**
@@ -55,9 +61,14 @@ public class Tracker {
      *
      * @param id уникальный ключ.
      */
-    public void delete(String id) {
-        System.arraycopy(this.items, this.findPositionById(id)+1, this.items, this.findPositionById(id),
-                this.items.length - 1 - this.findPositionById(id));
+    public boolean delete(String id) {
+        boolean result = false;
+        if (this.findPositionById(id) != -1) {
+            System.arraycopy(this.items, this.findPositionById(id) + 1, this.items,
+                    this.findPositionById(id), this.items.length - 1 - this.findPositionById(id));
+            result = true;
+        }
+        return result;
     }
 
     /**
@@ -66,11 +77,7 @@ public class Tracker {
      * @return заявки.
      */
     public Item[] findAll() {
-        Item[] result = new Item[position];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = this.items[i];
-        }
-        return result;
+        return Arrays.copyOf(items, this.position);
     }
 
     /**
