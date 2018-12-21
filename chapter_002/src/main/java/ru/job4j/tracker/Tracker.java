@@ -48,9 +48,10 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         boolean result = false;
-        if (this.findPositionById(id) != -1) {
-            item.setId(this.items[this.findPositionById(id)].getId());
-            this.items[this.findPositionById(id)] = item;
+        int position = this.findPositionById(id);
+        if (position != -1) {
+            item.setId(this.items[position].getId());
+            this.items[position] = item;
             result = true;
         }
         return result;
@@ -63,9 +64,10 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean result = false;
-        if (this.findPositionById(id) != -1) {
-            System.arraycopy(this.items, this.findPositionById(id) + 1, this.items,
-                    this.findPositionById(id), this.items.length - 1 - this.findPositionById(id));
+        int position = this.findPositionById(id);
+        if (position != -1) {
+            System.arraycopy(this.items, position + 1, this.items,
+                    position, this.items.length - 1 - position);
             result = true;
         }
         return result;
@@ -104,7 +106,8 @@ public class Tracker {
      * @return заявка.
      */
     public Item findById(String id) {
-        return (this.findPositionById(id) != -1) ? items[this.findPositionById(id)] : null;
+        int position = this.findPositionById(id);
+        return (position != -1) ? items[position] : null;
     }
 
     /**
