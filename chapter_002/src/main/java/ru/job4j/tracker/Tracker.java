@@ -69,6 +69,7 @@ public class Tracker {
             System.arraycopy(this.items, position + 1, this.items,
                     position, this.items.length - 1 - position);
             result = true;
+            this.position--;
         }
         return result;
     }
