@@ -7,12 +7,12 @@ package ru.job4j.profession;
  */
 public class Teacher extends Profession {
 
-   public Teacher(String name) {
-      super(name);
-      this.profession = "Teacher";
-   }
+    public Teacher(String name) {
+        super(name);
+        this.profession = "Teacher";
+    }
 
-   public void teach(Student name){
+    public void teach(Student name) {
 
-   }
+    }
 }

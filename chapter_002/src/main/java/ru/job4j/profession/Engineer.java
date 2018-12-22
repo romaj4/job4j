@@ -12,7 +12,7 @@ public class Engineer extends Profession {
         this.profession = "Engineer";
     }
 
-    public void build(House title){
+    public void build(House title) {
 
     }
 }
