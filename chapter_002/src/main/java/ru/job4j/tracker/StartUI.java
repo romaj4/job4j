@@ -33,7 +33,7 @@ public class StartUI {
     public void init() {
         boolean exit = false;
         while (!exit) {
-            this.showMenu();
+            System.out.println(this.showMenu());
             String answer = this.input.ask("Введите пункт меню : ");
             if (ADD.equals(answer)) {
                 this.createItem();
@@ -85,8 +85,8 @@ public class StartUI {
     }
 
     private void showItem(Item item) {
-        System.out.println("Name: " + item.getName() + "  description: "
-                + item.getDescription() + " id:" + item.getId());
+        System.out.println("Name: " + item.getName() + ", description: "
+                + item.getDescription() + ", id: " + item.getId());
     }
 
     private void createItem() {
@@ -98,15 +98,18 @@ public class StartUI {
         System.out.println("------------ Новая заявка с getId : " + item.getId() + "-----------");
     }
 
-    private void showMenu() {
-        System.out.println("Меню.");
-        System.out.println("0. Add new Item\n"
-                + "1. Show all items\n"
-                + "2. Edit item\n"
-                + "3. Delete item\n"
-                + "4. Find item by Id\n"
-                + "5. Find items by name\n"
-                + "6. Exit Program");
+    public String showMenu() {
+        StringBuilder st = new StringBuilder();
+        String ln = System.lineSeparator();
+        st.append("Меню" + ln)
+                .append("0. Add new Item" + ln)
+                .append("1. Show all items" + ln)
+                .append("2. Edit item" + ln)
+                .append("3. Delete item" + ln)
+                .append("4. Find item by Id" + ln)
+                .append("5. Find items by name" + ln)
+                .append("6. Exit Program" + ln);
+        return st.toString();
     }
 
     public static void main(String[] args) {
