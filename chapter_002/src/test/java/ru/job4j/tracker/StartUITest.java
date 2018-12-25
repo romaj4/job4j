@@ -59,6 +59,20 @@ public class StartUITest {
         assertThat(tracker.findAll()[0].getName(), is("test2"));
     }
 
+    public String showMenu() {
+        StringBuilder st = new StringBuilder();
+        String ln = System.lineSeparator();
+        st.append("Меню" + ln)
+                .append("0. Add new Item" + ln)
+                .append("1. Show all items" + ln)
+                .append("2. Edit item" + ln)
+                .append("3. Delete item" + ln)
+                .append("4. Find item by Id" + ln)
+                .append("5. Find items by name" + ln)
+                .append("6. Exit Program" + ln);
+        return st.toString();
+    }
+
     @Test
     public void whenShowAllItem() {
         this.loadOutput();
@@ -66,16 +80,15 @@ public class StartUITest {
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"1", "6"});
-        StartUI st = new StartUI(input, tracker);
-        st.init();
+        new StartUI(input, tracker).init();
         assertThat(
                 new String(out.toByteArray()),
                 is(
                         new StringBuilder()
-                                .append(st.showMenu() + this.ln)
+                                .append(this.showMenu() + this.ln)
                                 .append("Name: test1, description: desc1, id: " + item1.getId() + this.ln)
                                 .append("Name: test2, description: desc2, id: " + item2.getId() + this.ln)
-                                .append(st.showMenu() + this.ln)
+                                .append(this.showMenu() + this.ln)
                                 .toString()));
         this.backOutput();
     }
@@ -87,15 +100,14 @@ public class StartUITest {
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"4", item2.getId(), "6"});
-        StartUI st = new StartUI(input, tracker);
-        st.init();
+        new StartUI(input, tracker).init();
         assertThat(
                 new String(out.toByteArray()),
                 is(
                         new StringBuilder()
-                                .append(st.showMenu() + this.ln)
+                                .append(this.showMenu() + this.ln)
                                 .append("Name: test2, description: desc2, id: " + item2.getId() + this.ln)
-                                .append(st.showMenu() + this.ln)
+                                .append(this.showMenu() + this.ln)
                                 .toString()));
         this.backOutput();
     }
@@ -107,15 +119,14 @@ public class StartUITest {
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"5", item1.getName(), "6"});
-        StartUI st = new StartUI(input, tracker);
-        st.init();
+        new StartUI(input, tracker).init();
         assertThat(
                 new String(out.toByteArray()),
                 is(
                         new StringBuilder()
-                                .append(st.showMenu() + this.ln)
+                                .append(this.showMenu() + this.ln)
                                 .append("Name: test1, description: desc1, id: " + item1.getId() + this.ln)
-                                .append(st.showMenu() + this.ln)
+                                .append(this.showMenu() + this.ln)
                                 .toString()));
         this.backOutput();
     }

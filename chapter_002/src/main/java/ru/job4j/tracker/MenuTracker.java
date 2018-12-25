@@ -49,6 +49,217 @@ public class MenuTracker {
         }
         System.out.println();
     }
+
+    private class AddItem implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public AddItem(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            System.out.println("------------ Adding new item --------------");
+            String name = input.ask("Please, provide item name:");
+            String desc = input.ask("Please, provide item description:");
+            Item item = new Item(name, desc);
+            tracker.add(item);
+            System.out.println("------------ New Item with Id : " + item.getId());
+            System.out.println("------------ New Item with Name : " + item.getName());
+            System.out.println("------------ New Item with Description : " + item.getDescription());
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
+
+    private class ShowItems implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public ShowItems(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            for (Item item : tracker.findAll()) {
+                System.out.println(String.format("Name: %s, description: %s, id: %s",
+                        item.getName(), item.getDescription(), item.getId()));
+            }
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
+
+    private class UpdateItem implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public UpdateItem(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            String id = input.ask("Введите ID редактируемой заявки: ");
+            String name = input.ask("Введите имя новой заявки :");
+            String desc = input.ask("Введите описание новой заявки :");
+            Item item = new Item(name, desc);
+            tracker.replace(id, item);
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
+
+    private class DeleteItem implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public DeleteItem(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            String id = input.ask("Введите ID удаляемой заявки: ");
+            tracker.delete(id);
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
+
+    private class FindItemById implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public FindItemById(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            String id = input.ask("Введите ID заявки: ");
+            Item item = tracker.findById(id);
+            System.out.println(String.format("Name: %s, description: %s, id: %s",
+                    item.getName(), item.getDescription(), item.getId()));
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
+
+    private class FindItemsByName implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public FindItemsByName(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            String name = input.ask("Введите имя заявки: ");
+            for (Item item : tracker.findByName(name)) {
+                System.out.println(String.format("Name: %s, description: %s, id: %s",
+                        item.getName(), item.getDescription(), item.getId()));
+            }
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
+
+    private class ExitProgram implements UserAction {
+
+        private int key;
+
+        private String info;
+
+        public ExitProgram(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return this.key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+
+        }
+
+        @Override
+        public String info() {
+            return String.format("%d. %s", this.key, this.info);
+        }
+    }
 }
 
 
