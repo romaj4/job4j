@@ -1,14 +1,13 @@
 package ru.job4j.tracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
  * @version $Id$
  * @since 0.1
  */
 public class StartUI {
+
+    private int[] ranges;
 
     private final Input input;
 
@@ -21,17 +20,20 @@ public class StartUI {
 
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        List<Integer> range = new ArrayList<>();
         menu.fillActions();
+        ranges = new int[menu.getActionsLentgh()];
+        for (int i = 0; i < ranges.length; i++) {
+            ranges[i] = i;
+        }
         while (true) {
             menu.show();
-            int answer = Integer.parseInt(input.ask("Введите пункт меню : "));
+            int answer = input.ask("Введите пункт меню : ", ranges);
             menu.select(answer);
             if (answer == 6) break;
         }
     }
 
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }
