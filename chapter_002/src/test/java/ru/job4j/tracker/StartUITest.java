@@ -130,4 +130,18 @@ public class StartUITest {
                                 .toString()));
         this.backOutput();
     }
+
+    @Test(expected = MenuOutException.class)
+    public void whenMenuOutException() {
+        Tracker tracker = new Tracker();
+        Input input = new StubInput(new String[]{"28"});
+        new StartUI(input, tracker).init();
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void whenNumberFormatException() {
+        Tracker tracker = new Tracker();
+        Input input = new StubInput(new String[]{"java"});
+        new StartUI(input, tracker).init();
+    }
 }

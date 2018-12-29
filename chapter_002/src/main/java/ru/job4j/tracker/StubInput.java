@@ -23,6 +23,9 @@ public class StubInput implements Input {
     @Override
     public int ask(String question, int[] range) {
         int key = Integer.valueOf(this.ask(question));
+        if (key >= range.length || key < 0) {
+            throw new MenuOutException("Вы вышли за пределы допутимого значения меню");
+        }
         return key;
     }
 }
