@@ -27,9 +27,7 @@ public class StartUI {
         }
         while (true) {
             menu.show();
-            int answer = input.ask("Введите пункт меню : ", ranges);
-            menu.select(answer);
-            if (answer == 6) break;
+            menu.select(input.ask("Введите пункт меню : ", ranges));
         }
     }
 
