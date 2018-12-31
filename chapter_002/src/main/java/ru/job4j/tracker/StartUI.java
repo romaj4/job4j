@@ -25,10 +25,10 @@ public class StartUI {
         for (int i = 0; i < ranges.length; i++) {
             ranges[i] = i;
         }
-        while (true) {
+        do {
             menu.show();
             menu.select(input.ask("Введите пункт меню : ", ranges));
-        }
+        } while (menu.isOutput());
     }
 
     public static void main(String[] args) {

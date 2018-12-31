@@ -14,11 +14,17 @@ public class MenuTracker {
 
     private Tracker tracker;
 
+    private boolean output = true;
+
     private List<UserAction> actions = new ArrayList<>();
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
+    }
+
+    public boolean isOutput() {
+        return this.output;
     }
 
     public int getActionsLentgh() {
@@ -151,7 +157,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.exit(0);
+            MenuTracker.this.output = false;
         }
 
     }
