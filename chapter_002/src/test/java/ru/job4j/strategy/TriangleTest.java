@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class TriangleTest {
 
     @Test
-    public void whenDrawTriangle(){
+    public void whenDrawTriangle() {
         Triangle triangle = new Triangle();
         String ln = System.lineSeparator();
         assertThat(
