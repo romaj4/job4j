@@ -36,7 +36,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("test name"));
+        assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
     @Test
@@ -55,8 +55,8 @@ public class StartUITest {
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"3", item1.getId(), "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll().length, is(1));
-        assertThat(tracker.findAll()[0].getName(), is("test2"));
+        assertThat(tracker.findAll().size(), is(1));
+        assertThat(tracker.findAll().get(0).getName(), is("test2"));
     }
 
     public String showMenu() {

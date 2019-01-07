@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
  * @version $Id$
@@ -32,11 +34,11 @@ public class TrackerSingleStaticFinalClass {
         return this.tracker.delete(id);
     }
 
-    public Item[] findAll() {
+    public List<Item> findAll() {
         return this.tracker.findAll();
     }
 
-    public Item[] findByName(String name) {
+    public List<Item> findByName(String name) {
         return this.tracker.findByName(name);
     }
 

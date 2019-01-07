@@ -19,6 +19,6 @@ public class TrackerSingleStaticFieldTest {
         TrackerSingleStaticField tracker3 = TrackerSingleStaticField.getInstance();
         Item item = new Item("test1", "testDescription1");
         tracker1.add(item);
-        assertThat(tracker2.findAll()[0], is(tracker3.findByName("test1")[0]));
+        assertThat(tracker2.findAll().get(0), is(tracker3.findByName("test1").get(0)));
     }
 }
