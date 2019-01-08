@@ -27,9 +27,9 @@ public class ValidateInput implements Input {
                 value = this.input.ask(question, range);
                 invalid = false;
             } catch (MenuOutException moe) {
-                System.out.println("Ваше значение выходит за границы допустимых.");
+                System.out.print("Ваше значение выходит за границы допустимых.");
             } catch (NumberFormatException nfe) {
-                System.out.println("Необходимо использовать числовое значение");
+                System.out.print("Необходимо использовать числовое значение");
             }
         } while (invalid);
         return value;

@@ -38,7 +38,7 @@ public class ValidateInputTest {
         assertThat(
                 this.mem.toString(),
                 is(
-                        String.format("Ваше значение выходит за границы допустимых.\r\n")
+                        String.format("Ваше значение выходит за границы допустимых.")
                 )
         );
     }
@@ -51,7 +51,7 @@ public class ValidateInputTest {
         assertThat(
                 this.mem.toString(),
                 is(
-                        String.format("Необходимо использовать числовое значение\r\n")
+                        String.format("Необходимо использовать числовое значение")
                 )
         );
     }
