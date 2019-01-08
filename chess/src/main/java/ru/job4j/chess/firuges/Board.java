@@ -1,9 +1,8 @@
 package ru.job4j.chess.firuges;
 
-import ru.job4j.chess.firuges.Exception.FigureNotFoundException;
-import ru.job4j.chess.firuges.Exception.ImpossibleMoveException;
-import ru.job4j.chess.firuges.Exception.OccupiedWayException;
-import ru.job4j.chess.firuges.black.KnightBlack;
+import ru.job4j.chess.firuges.exception.FigureNotFoundException;
+import ru.job4j.chess.firuges.exception.ImpossibleMoveException;
+import ru.job4j.chess.firuges.exception.OccupiedWayException;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -30,7 +29,7 @@ public class Board {
             throw new ImpossibleMoveException("Фигура не может так двигаться");
         }
         for (int i = 0; i < steps.length; i++) {
-            if (this.findBy(steps[i]) != -1 ) {
+            if (this.findBy(steps[i]) != -1) {
                 throw new OccupiedWayException("Путь занят!");
             }
         }

@@ -75,7 +75,7 @@ public class Logic {
             for (int j = 0; j < table.length; j++) {
                 horizont += table[i][j];
                 vert += table[j][i];
-                if (horizont == table.length || vert == table.length){
+                if (horizont == table.length || vert == table.length) {
                     result = true;
                     break;
                 }

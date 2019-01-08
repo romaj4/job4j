@@ -26,8 +26,8 @@ public class QeenBlack implements Figure {
         if ((Math.abs(dest.x - source.x) == Math.abs(dest.y - source.y))) {
             steps = new BishopBlack(source).way(source, dest);
         }
-        if (source.x == dest.x && source.y != dest.y || source.x != dest.x && source.y == dest.y){
-            steps = new RookBlack(source).way(source,dest);
+        if (source.x == dest.x && source.y != dest.y || source.x != dest.x && source.y == dest.y) {
+            steps = new RookBlack(source).way(source, dest);
         }
         return steps;
     }

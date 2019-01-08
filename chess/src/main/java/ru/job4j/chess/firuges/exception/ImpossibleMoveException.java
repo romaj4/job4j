@@ -1,4 +1,4 @@
-package ru.job4j.chess.firuges.Exception;
+package ru.job4j.chess.firuges.exception;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)

@@ -1,7 +1,6 @@
 package ru.job4j.chess.firuges.black;
 
 import ru.job4j.chess.firuges.Cell;
-import ru.job4j.chess.firuges.Exception.ImpossibleMoveException;
 import ru.job4j.chess.firuges.Figure;
 
 /**

@@ -23,14 +23,14 @@ public class KnightBlack implements Figure {
     @Override
     public Cell[] way(Cell source, Cell dest) {
         Cell[] steps = new Cell[0];
-        if (dest.x == source.x + 2 && dest.y == source.y + 1 ||
-                dest.x == source.x + 2 && dest.y == source.y - 1 ||
-                dest.x == source.x - 2 && dest.y == source.y + 1 ||
-                dest.x == source.x - 2 && dest.y == source.y - 1 ||
-                dest.x == source.x + 1 && dest.y == source.y + 2 ||
-                dest.x == source.x + 1 && dest.y == source.y - 2 ||
-                dest.x == source.x - 1 && dest.y == source.y + 2 ||
-                dest.x == source.x - 1 && dest.y == source.y - 2) {
+        if (dest.x == source.x + 2 && dest.y == source.y + 1
+                || dest.x == source.x + 2 && dest.y == source.y - 1
+                || dest.x == source.x - 2 && dest.y == source.y + 1
+                || dest.x == source.x - 2 && dest.y == source.y - 1
+                || dest.x == source.x + 1 && dest.y == source.y + 2
+                || dest.x == source.x + 1 && dest.y == source.y - 2
+                || dest.x == source.x - 1 && dest.y == source.y + 2
+                || dest.x == source.x - 1 && dest.y == source.y - 2) {
             steps = new Cell[]{dest};
         }
         return steps;

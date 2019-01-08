@@ -1,4 +1,4 @@
-package ru.job4j.chess.firuges.Exception;
+package ru.job4j.chess.firuges.exception;
 
 public class FigureNotFoundException extends RuntimeException {
 

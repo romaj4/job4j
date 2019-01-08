@@ -3,7 +3,7 @@ package ru.job4j.chess.figures;
 import org.junit.Test;
 import ru.job4j.chess.firuges.Board;
 import ru.job4j.chess.firuges.Cell;
-import ru.job4j.chess.firuges.Exception.*;
+import ru.job4j.chess.firuges.exception.*;
 import ru.job4j.chess.firuges.black.*;
 
 import static org.hamcrest.core.Is.is;
