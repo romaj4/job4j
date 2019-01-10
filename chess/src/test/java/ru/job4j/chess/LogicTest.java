@@ -1,7 +1,6 @@
-package ru.job4j.chess.figures;
+package ru.job4j.chess;
 
 import org.junit.Test;
-import ru.job4j.chess.firuges.Board;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.exception.*;
 import ru.job4j.chess.firuges.black.*;
@@ -14,17 +13,17 @@ import static org.junit.Assert.assertThat;
  * @version $Id$
  * @since 0.1
  */
-public class BoardTest {
+public class LogicTest {
 
     /**
      * Черный слон ходит по диагонали на право вверх.
      */
     @Test
     public void whenBlackBishopMoveRightUp() {
-        Board board = new Board();
+        Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
-        board.add(bishopBlack);
-        boolean result = board.move(Cell.B1, Cell.F5);
+        logic.add(bishopBlack);
+        boolean result = logic.move(Cell.B1, Cell.F5);
         assertThat(result, is(true));
     }
 
@@ -33,12 +32,12 @@ public class BoardTest {
      */
     @Test(expected = OccupiedWayException.class)
     public void whenBlackBishopMoveRightUpWithOccupiedWay() {
-        Board board = new Board();
+        Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
         PawnBlack pawnBlack = new PawnBlack(Cell.C2);
-        board.add(bishopBlack);
-        board.add(pawnBlack);
-        board.move(Cell.B1, Cell.F5);
+        logic.add(bishopBlack);
+        logic.add(pawnBlack);
+        logic.move(Cell.B1, Cell.F5);
     }
 
     /**
@@ -46,10 +45,10 @@ public class BoardTest {
      */
     @Test(expected = ImpossibleMoveException.class)
     public void whenBlackBishopMoveRightUpWithImpossibleMove() {
-        Board board = new Board();
+        Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
-        board.add(bishopBlack);
-        board.move(Cell.B1, Cell.F8);
+        logic.add(bishopBlack);
+        logic.move(Cell.B1, Cell.F8);
     }
 
     /**
@@ -57,10 +56,10 @@ public class BoardTest {
      */
     @Test(expected = FigureNotFoundException.class)
     public void whenFigureNotFound() {
-        Board board = new Board();
+        Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
-        board.add(bishopBlack);
-        board.move(Cell.B2, Cell.F8);
+        logic.add(bishopBlack);
+        logic.move(Cell.B2, Cell.F8);
     }
 
     /**
@@ -68,10 +67,10 @@ public class BoardTest {
      */
     @Test
     public void whenBlackRookMoveDown() {
-        Board board = new Board();
+        Logic logic = new Logic();
         RookBlack rookBlack = new RookBlack(Cell.D4);
-        board.add(rookBlack);
-        boolean rst = board.move(Cell.D4, Cell.F4);
+        logic.add(rookBlack);
+        boolean rst = logic.move(Cell.D4, Cell.F4);
         assertThat(rst, is(true));
     }
 
@@ -80,10 +79,10 @@ public class BoardTest {
      */
     @Test
     public void whenBlackKingMoveLeftDown() {
-        Board board = new Board();
+        Logic logic = new Logic();
         KingBlack kingBlack = new KingBlack(Cell.G2);
-        board.add(kingBlack);
-        boolean result = board.move(Cell.G2, Cell.H1);
+        logic.add(kingBlack);
+        boolean result = logic.move(Cell.G2, Cell.H1);
         assertThat(result, is(true));
     }
 
@@ -92,10 +91,10 @@ public class BoardTest {
      */
     @Test
     public void whenBlackQeenMoveUp() {
-        Board board = new Board();
+        Logic logic = new Logic();
         QeenBlack qeenBlack = new QeenBlack(Cell.D4);
-        board.add(qeenBlack);
-        boolean rst = board.move(Cell.D4, Cell.B4);
+        logic.add(qeenBlack);
+        boolean rst = logic.move(Cell.D4, Cell.B4);
         assertThat(rst, is(true));
     }
 
@@ -104,10 +103,10 @@ public class BoardTest {
      */
     @Test
     public void whenBlackKnightMoveUpRight() {
-        Board board = new Board();
+        Logic logic = new Logic();
         KnightBlack knightBlack = new KnightBlack(Cell.D4);
-        board.add(knightBlack);
-        boolean rst = board.move(Cell.D4, Cell.B5);
+        logic.add(knightBlack);
+        boolean rst = logic.move(Cell.D4, Cell.B5);
         assertThat(rst, is(true));
     }
 }
