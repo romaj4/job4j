@@ -37,7 +37,7 @@ public class LogicTest {
         PawnBlack pawnBlack = new PawnBlack(Cell.C2);
         logic.add(bishopBlack);
         logic.add(pawnBlack);
-        logic.move(Cell.B1, Cell.F5);
+        logic.isOccupiedWay(bishopBlack.way(Cell.B1, Cell.F5));
     }
 
     /**
@@ -48,7 +48,7 @@ public class LogicTest {
         Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
         logic.add(bishopBlack);
-        logic.move(Cell.B1, Cell.F8);
+        logic.isPossibleMove(bishopBlack.way(Cell.E1, Cell.A4));
     }
 
     /**
@@ -57,9 +57,7 @@ public class LogicTest {
     @Test(expected = FigureNotFoundException.class)
     public void whenFigureNotFound() {
         Logic logic = new Logic();
-        BishopBlack bishopBlack = new BishopBlack(Cell.B1);
-        logic.add(bishopBlack);
-        logic.move(Cell.B2, Cell.F8);
+        logic.isFigure(Cell.E4);
     }
 
     /**

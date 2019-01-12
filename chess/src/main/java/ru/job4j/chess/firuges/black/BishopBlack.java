@@ -2,6 +2,7 @@ package ru.job4j.chess.firuges.black;
 
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
+import ru.job4j.chess.firuges.exception.ImpossibleMoveException;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -31,6 +32,9 @@ public class BishopBlack implements Figure {
             for (int index = 0; index < steps.length; index++) {
                 steps[index] = Cell.values()[(source.x + deltaX * (index + 1)) * 8 + (source.y + deltaY * (index + 1))];
             }
+        }
+        if (steps.length == 0) {
+            throw new ImpossibleMoveException("Фигура не может так двигаться");
         }
         return steps;
     }

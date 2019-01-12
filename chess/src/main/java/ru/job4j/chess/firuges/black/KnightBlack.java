@@ -2,6 +2,7 @@ package ru.job4j.chess.firuges.black;
 
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
+import ru.job4j.chess.firuges.exception.ImpossibleMoveException;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -32,6 +33,9 @@ public class KnightBlack implements Figure {
                 || dest.x == source.x - 1 && dest.y == source.y + 2
                 || dest.x == source.x - 1 && dest.y == source.y - 2) {
             steps = new Cell[]{dest};
+        }
+        if (steps.length == 0) {
+            throw new ImpossibleMoveException("Фигура не может так двигаться");
         }
         return steps;
     }
