@@ -25,7 +25,7 @@ public class Logic {
         try {
             if (isFigure(source)) {
                 Cell[] steps = this.figures[index].way(source, dest);
-                if (isPossibleMove(steps) && isOccupiedWay(steps)) {
+                if (steps.length != 0 && isOccupiedWay(steps)) {
                     rst = true;
                     this.figures[index] = this.figures[index].copy(dest);
                 }
@@ -41,10 +41,6 @@ public class Logic {
             throw new FigureNotFoundException("В заданной ячейке нет фигуры!");
         }
         return true;
-    }
-
-    public boolean isPossibleMove(Cell[] steps) {
-        return steps.length != 0;
     }
 
     public boolean isOccupiedWay(Cell[] steps) {

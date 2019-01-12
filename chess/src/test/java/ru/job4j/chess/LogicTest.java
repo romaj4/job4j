@@ -45,10 +45,8 @@ public class LogicTest {
      */
     @Test(expected = ImpossibleMoveException.class)
     public void whenBlackBishopMoveRightUpWithImpossibleMove() {
-        Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
-        logic.add(bishopBlack);
-        logic.isPossibleMove(bishopBlack.way(Cell.E1, Cell.A4));
+        bishopBlack.way(Cell.E1, Cell.A4);
     }
 
     /**
