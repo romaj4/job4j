@@ -73,4 +73,10 @@ public class BankTest {
         assertThat(bank.getUserAccounts("111111").get(0).getValue(), is(6500.0));
         assertThat(bank.getUserAccounts("222222").get(0).getValue(), is(18500.0));
     }
+
+    @Test
+    public void whenNotFoundRequisites() {
+        Bank bank = new Bank();
+        assertThat(bank.findAccountByRequisites("111", "111"), is((Account) null));
+    }
 }

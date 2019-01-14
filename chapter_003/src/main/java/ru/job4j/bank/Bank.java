@@ -23,11 +23,17 @@ public class Bank {
     }
 
     public void addAccountToUser(String passport, Account account) {
-        this.userMap.get(findUserByPassport(passport)).add(account);
+        User user = findUserByPassport(passport);
+        if (user != null) {
+            this.userMap.get(user).add(account);
+        }
     }
 
     public void deleteAccountFromUser(String passport, Account account) {
-        this.userMap.get(findUserByPassport(passport)).remove(account);
+        User user = findUserByPassport(passport);
+        if (user != null) {
+            this.userMap.get(user).remove(account);
+        }
     }
 
     public List<Account> getUserAccounts(String passport) {
@@ -46,9 +52,12 @@ public class Bank {
 
     public Account findAccountByRequisites(String passport, String requisite) {
         Account findAccount = null;
-        for (Account account : this.getUserAccounts(passport)) {
-            if (account.getRequisites().equals(requisite)) {
-                findAccount = account;
+        List<Account> accountList = this.getUserAccounts(passport);
+        if (accountList != null) {
+            for (Account account : accountList) {
+                if (account.getRequisites().equals(requisite)) {
+                    findAccount = account;
+                }
             }
         }
         return findAccount;
