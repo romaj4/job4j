@@ -37,16 +37,19 @@ public class LogicTest {
         PawnBlack pawnBlack = new PawnBlack(Cell.C2);
         logic.add(bishopBlack);
         logic.add(pawnBlack);
-        logic.isOccupiedWay(bishopBlack.way(Cell.B1, Cell.F5));
+        logic.move(Cell.B1, Cell.F5);
     }
+
 
     /**
      * Черный слон ходит по по неправильной траектории.
      */
     @Test(expected = ImpossibleMoveException.class)
     public void whenBlackBishopMoveRightUpWithImpossibleMove() {
+        Logic logic = new Logic();
         BishopBlack bishopBlack = new BishopBlack(Cell.B1);
-        bishopBlack.way(Cell.E1, Cell.A4);
+        logic.add(bishopBlack);
+        logic.move(Cell.B1, Cell.F8);
     }
 
     /**
@@ -55,7 +58,9 @@ public class LogicTest {
     @Test(expected = FigureNotFoundException.class)
     public void whenFigureNotFound() {
         Logic logic = new Logic();
-        logic.isFigure(Cell.E4);
+        BishopBlack bishopBlack = new BishopBlack(Cell.B1);
+        logic.add(bishopBlack);
+        logic.move(Cell.B2, Cell.F8);
     }
 
     /**

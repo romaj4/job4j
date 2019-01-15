@@ -20,35 +20,17 @@ public class Logic {
     }
 
     public boolean move(Cell source, Cell dest) {
-        boolean rst = false;
         int index = this.findBy(source);
-        try {
-            if (isFigure(source)) {
-                Cell[] steps = this.figures[index].way(source, dest);
-                if (steps.length != 0 && isOccupiedWay(steps)) {
-                    rst = true;
-                    this.figures[index] = this.figures[index].copy(dest);
-                }
-            }
-        } catch (ImpossibleMoveException | FigureNotFoundException | OccupiedWayException e) {
-            System.out.println(e.getMessage());
-        }
-        return rst;
-    }
-
-    public boolean isFigure(Cell source) {
         if (this.findBy(source) == -1) {
             throw new FigureNotFoundException("В заданной ячейке нет фигуры!");
         }
-        return true;
-    }
-
-    public boolean isOccupiedWay(Cell[] steps) {
+        Cell[] steps = this.figures[index].way(source, dest);
         for (int i = 0; i < steps.length; i++) {
             if (this.findBy(steps[i]) != -1) {
                 throw new OccupiedWayException("Путь занят!");
             }
         }
+        this.figures[index] = this.figures[index].copy(dest);
         return true;
     }
 
