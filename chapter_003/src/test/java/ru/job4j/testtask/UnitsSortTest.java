@@ -43,4 +43,12 @@ public class UnitsSortTest {
         assertThat(sortCode[7], is("K1/SK1/SSK2"));
         assertThat(sortCode[8], is("K1/SK1/SSK1"));
     }
+
+    @Test
+    public void whenInsertUnit() {
+        UnitsSort unitsSort = new UnitsSort();
+        String[] src = new String[]{"K1/SK1/SSK1", "K1/SK1/SSK2", "K2", "K2/SK1/SSK1", "K2/SK1/SSK2"};
+        String[] res = unitsSort.insertUnits(src);
+        assertThat(res.length, is(8));
+    }
 }

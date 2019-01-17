@@ -1,9 +1,6 @@
 package ru.job4j.testtask;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -12,8 +9,51 @@ import java.util.TreeSet;
  */
 public class UnitsSort {
 
+    /**
+     * Сортировка подразделений по возрастанию.
+     *
+     * @param src массив подразделений.
+     * @return отсортированный массив.
+     */
     public String[] sortUnits(String[] src) {
-        Set<String> set = new TreeSet<>();
+        String[] units = this.insertUnits(src);
+        Arrays.sort(units);
+        return units;
+    }
+
+    /**
+     * Сортировка подразделений по убыванию.
+     *
+     * @param src массив подразделений.
+     * @return отсортированный массив.
+     */
+    public String[] reverseSortUnits(String[] src) {
+        String[] units = this.insertUnits(src);
+        Comparator<String> strCompare = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                int minLen = Math.min(o1.length(), o2.length());
+                char[] str1 = o1.toCharArray();
+                char[] str2 = o2.toCharArray();
+                int comp = 0;
+                for (int i = 0; i < minLen && comp == 0; i++) {
+                    comp = str2[i] - str1[i];
+                }
+                return comp == 0 ? o1.length() - o2.length() : comp;
+            }
+        };
+        Arrays.sort(units, strCompare);
+        return units;
+    }
+
+    /**
+     * Втавка кода всех подразделений структуры.
+     *
+     * @param src массив подразделений.
+     * @return массив всех подразделений структуры.
+     */
+    public String[] insertUnits(String[] src) {
+        Set<String> set = new HashSet<>();
         String del = "/";
         for (int i = 0; i < src.length; i++) {
             String[] splitStr = src[i].split(del);
@@ -25,22 +65,5 @@ public class UnitsSort {
             }
         }
         return set.toArray(new String[]{});
-    }
-
-    public String[] reverseSortUnits(String[] src) {
-        String[] units = this.sortUnits(src);
-        Comparator<String> strCompare = new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                int minLen = Math.min(o1.length(), o2.length());
-                int comp = 0;
-                for (int i = 0; i < minLen && comp == 0; i++) {
-                    comp = o2.toCharArray()[i] - o1.toCharArray()[i];
-                }
-                return comp == 0 ? o1.length() - o2.length() : comp;
-            }
-        };
-        Arrays.sort(units, strCompare);
-        return units;
     }
 }
