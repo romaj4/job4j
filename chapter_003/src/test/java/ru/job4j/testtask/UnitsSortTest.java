@@ -2,6 +2,8 @@ package ru.job4j.testtask;
 
 import org.junit.Test;
 
+import java.util.Set;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -48,7 +50,7 @@ public class UnitsSortTest {
     public void whenInsertUnit() {
         UnitsSort unitsSort = new UnitsSort();
         String[] src = new String[]{"K1/SK1/SSK1", "K1/SK1/SSK2", "K2", "K2/SK1/SSK1", "K2/SK1/SSK2"};
-        String[] res = unitsSort.insertUnits(src);
-        assertThat(res.length, is(8));
+        Set<String> res = unitsSort.insertUnits(src);
+        assertThat(res.size(), is(8));
     }
 }

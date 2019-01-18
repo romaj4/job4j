@@ -16,9 +16,8 @@ public class UnitsSort {
      * @return отсортированный массив.
      */
     public String[] sortUnits(String[] src) {
-        String[] units = this.insertUnits(src);
-        Arrays.sort(units);
-        return units;
+        Set<String> units = new TreeSet<>(this.insertUnits(src));
+        return units.toArray(new String[]{});
     }
 
     /**
@@ -28,17 +27,14 @@ public class UnitsSort {
      * @return отсортированный массив.
      */
     public String[] reverseSortUnits(String[] src) {
-        String[] units = this.insertUnits(src);
+        String[] units = this.insertUnits(src).toArray(new String[]{});
         Comparator<String> strCompare = new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 int minLen = Math.min(o1.length(), o2.length());
-                char[] str1 = o1.toCharArray();
-                char[] str2 = o2.toCharArray();
-                int comp = 0;
-                for (int i = 0; i < minLen && comp == 0; i++) {
-                    comp = str2[i] - str1[i];
-                }
+                String str1 = o1.substring(0, minLen);
+                String str2 = o2.substring(0, minLen);
+                int comp = str2.compareTo(str1);
                 return comp == 0 ? o1.length() - o2.length() : comp;
             }
         };
@@ -52,7 +48,7 @@ public class UnitsSort {
      * @param src массив подразделений.
      * @return массив всех подразделений структуры.
      */
-    public String[] insertUnits(String[] src) {
+    public Set<String> insertUnits(String[] src) {
         Set<String> set = new HashSet<>();
         String del = "/";
         for (int i = 0; i < src.length; i++) {
@@ -64,6 +60,6 @@ public class UnitsSort {
                 set.add(temp);
             }
         }
-        return set.toArray(new String[]{});
+        return set;
     }
 }
