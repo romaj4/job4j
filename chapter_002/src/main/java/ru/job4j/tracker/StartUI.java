@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
  * @version $Id$
@@ -13,13 +15,16 @@ public class StartUI {
 
     private final Tracker tracker;
 
-    public StartUI(Input input, Tracker tracker) {
+    private final Consumer<String> output;
+
+    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
     public void init() {
-        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        MenuTracker menu = new MenuTracker(this.input, this.tracker, output);
         menu.fillActions();
         ranges = new int[menu.getActionsLentgh()];
         for (int i = 0; i < ranges.length; i++) {
@@ -28,10 +33,10 @@ public class StartUI {
         do {
             menu.show();
             menu.select(input.ask("Введите пункт меню : ", ranges));
-        } while (menu.isOutput());
+        } while (menu.isOut());
     }
 
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
+        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker(), System.out::println).init();
     }
 }

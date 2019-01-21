@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -15,27 +16,29 @@ import static org.junit.Assert.*;
  */
 public class StartUITest {
 
-    private final PrintStream stdout = System.out;
-
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     private final String ln = System.lineSeparator();
 
-    public void loadOutput() {
-        System.out.println("execute before method");
-        System.setOut(new PrintStream(this.out));
-    }
+    private final Consumer<String> output = new Consumer<String>() {
+        private final PrintStream stdout = new PrintStream(out);
 
-    public void backOutput() {
-        System.setOut(this.stdout);
-        System.out.println("execute after method");
-    }
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
+
+        @Override
+        public String toString() {
+            return out.toString();
+        }
+    };
 
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
@@ -44,7 +47,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
     }
 
@@ -54,7 +57,7 @@ public class StartUITest {
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"3", item1.getId(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().size(), is(1));
         assertThat(tracker.findAll().get(0).getName(), is("test2"));
     }
@@ -75,14 +78,13 @@ public class StartUITest {
 
     @Test
     public void whenShowAllItem() {
-        this.loadOutput();
         Tracker tracker = new Tracker();
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(
-                new String(out.toByteArray()),
+                this.output.toString(),
                 is(
                         new StringBuilder()
                                 .append(this.showMenu() + this.ln)
@@ -90,58 +92,53 @@ public class StartUITest {
                                 .append("Name: test2, description: desc2, id: " + item2.getId() + this.ln)
                                 .append(this.showMenu() + this.ln)
                                 .toString()));
-        this.backOutput();
     }
 
     @Test
     public void whenFindByID() {
-        this.loadOutput();
         Tracker tracker = new Tracker();
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"4", item2.getId(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(
-                new String(out.toByteArray()),
+                this.output.toString(),
                 is(
                         new StringBuilder()
                                 .append(this.showMenu() + this.ln)
                                 .append("Name: test2, description: desc2, id: " + item2.getId() + this.ln)
                                 .append(this.showMenu() + this.ln)
                                 .toString()));
-        this.backOutput();
     }
 
     @Test
     public void whenFindByName() {
-        this.loadOutput();
         Tracker tracker = new Tracker();
         Item item1 = tracker.add(new Item("test1", "desc1"));
         Item item2 = tracker.add(new Item("test2", "desc2"));
         Input input = new StubInput(new String[]{"5", item1.getName(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(
-                new String(out.toByteArray()),
+                this.output.toString(),
                 is(
                         new StringBuilder()
                                 .append(this.showMenu() + this.ln)
                                 .append("Name: test1, description: desc1, id: " + item1.getId() + this.ln)
                                 .append(this.showMenu() + this.ln)
                                 .toString()));
-        this.backOutput();
     }
 
     @Test(expected = MenuOutException.class)
     public void whenMenuOutException() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"28"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
     }
 
     @Test(expected = NumberFormatException.class)
     public void whenNumberFormatException() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"java"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
     }
 }

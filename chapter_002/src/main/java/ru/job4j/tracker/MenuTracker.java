@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -14,17 +15,20 @@ public class MenuTracker {
 
     private Tracker tracker;
 
-    private boolean output = true;
+    private boolean out = true;
+
+    private final Consumer<String> output;
 
     private List<UserAction> actions = new ArrayList<>();
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
-    public boolean isOutput() {
-        return this.output;
+    public boolean isOut() {
+        return this.out;
     }
 
     public int getActionsLentgh() {
@@ -46,13 +50,13 @@ public class MenuTracker {
     }
 
     public void show() {
-        System.out.println("Меню");
+        output.accept("Меню");
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                output.accept(action.info());
             }
         }
-        System.out.println();
+        output.accept("");
     }
 
     private class AddItem extends BaseAction {
@@ -63,14 +67,14 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("------------ Adding new item --------------");
+            output.accept("------------ Adding new item --------------");
             String name = input.ask("Please, provide item name:");
             String desc = input.ask("Please, provide item description:");
             Item item = new Item(name, desc);
             tracker.add(item);
-            System.out.println("------------ New Item with Id : " + item.getId());
-            System.out.println("------------ New Item with Name : " + item.getName());
-            System.out.println("------------ New Item with Description : " + item.getDescription());
+            output.accept("------------ New Item with Id : " + item.getId());
+            output.accept("------------ New Item with Name : " + item.getName());
+            output.accept("------------ New Item with Description : " + item.getDescription());
         }
     }
 
@@ -83,7 +87,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             for (Item item : tracker.findAll()) {
-                System.out.println(String.format("Name: %s, description: %s, id: %s",
+                output.accept(String.format("Name: %s, description: %s, id: %s",
                         item.getName(), item.getDescription(), item.getId()));
             }
         }
@@ -128,7 +132,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Введите ID заявки: ");
             Item item = tracker.findById(id);
-            System.out.println(String.format("Name: %s, description: %s, id: %s",
+            output.accept(String.format("Name: %s, description: %s, id: %s",
                     item.getName(), item.getDescription(), item.getId()));
         }
     }
@@ -143,7 +147,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Введите имя заявки: ");
             for (Item item : tracker.findByName(name)) {
-                System.out.println(String.format("Name: %s, description: %s, id: %s",
+                output.accept(String.format("Name: %s, description: %s, id: %s",
                         item.getName(), item.getDescription(), item.getId()));
             }
         }
@@ -157,7 +161,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            MenuTracker.this.output = false;
+            MenuTracker.this.out = false;
         }
 
     }
