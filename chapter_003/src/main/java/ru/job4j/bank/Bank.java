@@ -41,26 +41,12 @@ public class Bank {
     }
 
     public User findUserByPassport(String passport) {
-        User findUser = null;
-        for (User user : this.userMap.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                findUser = user;
-            }
-        }
-        return findUser;
+        return this.userMap.keySet().stream().filter(user -> user.getPassport().equals(passport)).findAny().orElse(null);
     }
 
     public Account findAccountByRequisites(String passport, String requisite) {
-        Account findAccount = null;
         List<Account> accountList = this.getUserAccounts(passport);
-        if (accountList != null) {
-            for (Account account : accountList) {
-                if (account.getRequisites().equals(requisite)) {
-                    findAccount = account;
-                }
-            }
-        }
-        return findAccount;
+        return accountList != null ? accountList.stream().filter(account -> account.getRequisites().equals(requisite)).findAny().orElse(null) : null;
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String destRequisite, double amount) {

@@ -1,7 +1,9 @@
 package ru.job4j.list;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -11,22 +13,10 @@ import java.util.List;
 public class ConvertMatrix2List {
 
     public List<Integer> toList(int[][] array) {
-        List<Integer> list = new ArrayList<>();
-        for (int[] arr : array) {
-            for (int val : arr) {
-                list.add(val);
-            }
-        }
-        return list;
+        return Arrays.stream(array).flatMapToInt(Arrays::stream).boxed().collect(Collectors.toList());
     }
 
     public List<Integer> convert(List<int[]> list) {
-        List<Integer> result = new ArrayList<>();
-        for (int[] arr : list) {
-            for (int val : arr) {
-                result.add(val);
-            }
-        }
-        return result;
+        return list.stream().flatMapToInt(Arrays::stream).boxed().collect(Collectors.toList());
     }
 }
