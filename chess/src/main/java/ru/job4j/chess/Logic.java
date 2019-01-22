@@ -4,6 +4,8 @@ import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 import ru.job4j.chess.firuges.exception.*;
 
+import java.util.stream.IntStream;
+
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
  * @version $Id$
@@ -35,14 +37,8 @@ public class Logic {
     }
 
     private int findBy(Cell cell) {
-        int rst = -1;
-        for (int index = 0; index < this.figures.length; index++) {
-            if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
-                rst = index;
-                break;
-            }
-        }
-        return rst;
+        return IntStream.range(0, this.figures.length).filter(index -> this.figures[index] != null
+                && this.figures[index].position().equals(cell)).findFirst().orElse(-1);
     }
 
     public void clean() {
