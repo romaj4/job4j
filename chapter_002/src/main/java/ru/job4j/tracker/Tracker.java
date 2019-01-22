@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -85,13 +86,7 @@ public class Tracker {
      * @return заявки.
      */
     public List<Item> findByName(String name) {
-        List<Item> result = new ArrayList<>();
-        for (Item item : items) {
-            if (item.getName().equals(name)) {
-                result.add(item);
-            }
-        }
-        return result;
+        return this.items.stream().filter(item -> item.getName().equals(name)).collect(Collectors.toList());
     }
 
     /**
@@ -101,8 +96,7 @@ public class Tracker {
      * @return заявка.
      */
     public Item findById(String id) {
-        int position = this.findPositionById(id);
-        return (position != -1) ? items.get(position) : null;
+        return this.items.stream().filter(item -> item.getId() == id).findAny().orElse(null);
     }
 
     /**
