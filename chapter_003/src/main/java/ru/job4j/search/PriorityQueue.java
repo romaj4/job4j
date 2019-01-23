@@ -19,11 +19,11 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        int number = this.tasks.size();
+        var number = this.tasks.size();
         if (number == 0 || this.tasks.get(number - 1).getPriority() < task.getPriority()) {
             this.tasks.add(task);
         } else {
-            for (int i = 0; i < number; i++) {
+            for (var i = 0; i < number; i++) {
                 if (task.getPriority() < this.tasks.get(i).getPriority()) {
                     this.tasks.add(i, task);
                     break;

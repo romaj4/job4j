@@ -14,37 +14,37 @@ public class PhoneDictionaryTest {
 
     @Test
     public void whenFindByName() {
-        PhoneDictionary dictionary = new PhoneDictionary();
+        var dictionary = new PhoneDictionary();
         dictionary.add(new Person("Petr", "Arsentev", "534872", "Bryansk"));
         dictionary.add(new Person("Roman", "Korolchuk", "435460", "Piter"));
-        List<Person> persons = dictionary.find("Petr");
+        var persons = dictionary.find("Petr");
         assertThat(persons.iterator().next().getSurname(), is("Arsentev"));
     }
 
     @Test
     public void whenFindBySurname() {
-        PhoneDictionary dictionary = new PhoneDictionary();
+        var dictionary = new PhoneDictionary();
         dictionary.add(new Person("Petr", "Arsentev", "534872", "Bryansk"));
         dictionary.add(new Person("Roman", "Korolchuk", "435460", "Piter"));
-        List<Person> persons = dictionary.find("orolch");
+        var persons = dictionary.find("orolch");
         assertThat(persons.iterator().next().getName(), is("Roman"));
     }
 
     @Test
     public void whenFindByPhone() {
-        PhoneDictionary dictionary = new PhoneDictionary();
+        var dictionary = new PhoneDictionary();
         dictionary.add(new Person("Petr", "Arsentev", "534872", "Bryansk"));
         dictionary.add(new Person("Roman", "Korolchuk", "435460", "Piter"));
-        List<Person> persons = dictionary.find("5460");
+        var persons = dictionary.find("5460");
         assertThat(persons.iterator().next().getSurname(), is("Korolchuk"));
     }
 
     @Test
     public void whenFindByAddress() {
-        PhoneDictionary dictionary = new PhoneDictionary();
+        var dictionary = new PhoneDictionary();
         dictionary.add(new Person("Petr", "Arsentev", "534872", "Bryansk"));
         dictionary.add(new Person("Roman", "Korolchuk", "435460", "Piter"));
-        List<Person> persons = dictionary.find("Piter");
+        var persons = dictionary.find("Piter");
         assertThat(persons.iterator().next().getSurname(), is("Korolchuk"));
     }
 }
