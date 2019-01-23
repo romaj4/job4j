@@ -19,9 +19,10 @@ public class UserConvertTest {
     @Test
     public void whenAdd2Users() {
         UserConvert userConvert = new UserConvert();
-        List<User> list = new ArrayList<>();
-        list.add(new User(1111, "Ivan", "Moskva"));
-        list.add(new User(2222, "Petr", "Minsk"));
+        List<User> list = List.of(
+                new User(1111, "Ivan", "Moskva"),
+                new User(2222, "Petr", "Minsk")
+        );
         HashMap<Integer, User> result = userConvert.process(list);
         assertThat(result.get(1111).getName(), is("Ivan"));
         assertThat(result.get(2222).getCity(), is("Minsk"));

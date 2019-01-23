@@ -19,10 +19,11 @@ public class SortUserTest {
     @Test
     public void whenAdd3Users() {
         SortUser sortUser = new SortUser();
-        List<User> list = new ArrayList<>();
-        list.add(new User("Roman", 33));
-        list.add(new User("Petr", 28));
-        list.add(new User("Ivan", 14));
+        List<User> list = List.of(
+                new User("Roman", 33),
+                new User("Petr", 28),
+                new User("Ivan", 14)
+        );
         TreeSet<User> result = (TreeSet<User>) sortUser.sort(list);
         assertThat(result.first().getName(), is("Ivan"));
         assertThat(result.last().getAge(), is(33));
@@ -31,10 +32,11 @@ public class SortUserTest {
     @Test
     public void whenSortedByNameLength() {
         SortUser sortUser = new SortUser();
-        List<User> list = new ArrayList<>();
-        list.add(new User("Roman", 33));
-        list.add(new User("Petr", 28));
-        list.add(new User("Vlaimir", 14));
+        List<User> list = List.of(
+                new User("Roman", 33),
+                new User("Petr", 28),
+                new User("Vlaimir", 14)
+        );
         List<User> result = sortUser.sortNameLength(list);
         assertThat(result.get(0).getName(), is("Petr"));
         assertThat(result.get(1).getName(), is("Roman"));
@@ -43,11 +45,12 @@ public class SortUserTest {
     @Test
     public void whenSortedByAllFields() {
         SortUser sortUser = new SortUser();
-        List<User> list = new ArrayList<>();
-        list.add(new User("Roman", 25));
-        list.add(new User("Ivan", 30));
-        list.add(new User("Roman", 20));
-        list.add(new User("Ivan", 25));
+        List<User> list = List.of(
+                new User("Roman", 25),
+                new User("Ivan", 30),
+                new User("Roman", 20),
+                new User("Ivan", 25)
+        );
         List<User> result = sortUser.sortByAllFields(list);
         assertThat(result.get(0).getName(), is("Ivan"));
         assertThat(result.get(0).getAge(), is(25));
