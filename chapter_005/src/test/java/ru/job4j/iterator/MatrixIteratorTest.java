@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -53,4 +54,16 @@ public class MatrixIteratorTest {
         assertThat(it.hasNext(), is(false));
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void whenNextOutOfArrayElement() {
+        for (int i = 0; i < 10; i++) {
+            it.next();
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenEmptyArray() {
+        var itEmpty = new MatrixIterator(new int[][]{});
+        itEmpty.next();
+    }
 }

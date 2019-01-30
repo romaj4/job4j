@@ -1,6 +1,7 @@
 package ru.job4j.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -26,6 +27,9 @@ public class MatrixIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException();
+        }
         int res;
         if (this.secondIndex < arr[this.firstIndex].length - 1) {
             res = arr[this.firstIndex][this.secondIndex++];
