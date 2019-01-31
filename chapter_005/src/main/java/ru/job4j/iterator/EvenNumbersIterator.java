@@ -20,7 +20,13 @@ public class EvenNumbersIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return this.numberNextEvenElement(this.index, this.numbers) != -1;
+        boolean rst = false;
+        int nextIndex = this.numberNextEvenElement(this.index, this.numbers);
+        if (nextIndex != -1) {
+            rst = true;
+            this.index = nextIndex;
+        }
+        return rst;
     }
 
     @Override
@@ -28,9 +34,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        int temp = this.numberNextEvenElement(this.index, this.numbers);
-        this.index = temp + 1;
-        return this.numbers[temp];
+        return this.numbers[this.index++];
     }
 
     private int numberNextEvenElement(int position, int[] arr) {
