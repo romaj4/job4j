@@ -16,9 +16,11 @@ public class Converter {
 
             @Override
             public boolean hasNext() {
-                if (!itNext.hasNext()) {
+                while (!itNext.hasNext()) {
                     if (it.hasNext()) {
                         itNext = it.next();
+                    } else {
+                        break;
                     }
                 }
                 return itNext.hasNext();
