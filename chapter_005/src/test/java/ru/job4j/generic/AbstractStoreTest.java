@@ -52,4 +52,15 @@ public class AbstractStoreTest {
         assertThat(absStore.findPositionById("3"), is(1));
         assertThat(absStore.findById("2"), is((Role) null));
     }
+
+    @Test
+    public void whenDeleteAndReplaceNotFindRole() {
+        AbstractStore<Role> absStore = new RoleStore(new SimpleArray<>(5));
+        Role role1 = new Role("1");
+        Role role2 = new Role("2");
+        absStore.add(role1);
+        absStore.add(role2);
+        assertThat(absStore.delete("10"), is(false));
+        assertThat(absStore.replace("11", role1), is(false));
+    }
 }

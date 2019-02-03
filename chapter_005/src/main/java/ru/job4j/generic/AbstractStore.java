@@ -20,12 +20,14 @@ public class AbstractStore<T extends Base> implements Store<T> {
 
     @Override
     public boolean replace(String id, T model) {
-        return this.store.set(this.findPositionById(id), model);
+        int index = this.findPositionById(id);
+        return index != -1 && this.store.set(index, model);
     }
 
     @Override
     public boolean delete(String id) {
-        return this.store.remove(this.findPositionById(id));
+        int index = this.findPositionById(id);
+        return index != -1 && this.store.remove(index);
     }
 
     @Override
