@@ -1,5 +1,7 @@
 package ru.job4j.list;
 
+import java.util.NoSuchElementException;
+
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
  * @version $Id$
@@ -25,6 +27,9 @@ public class SimpleArrayList<E> {
      * Реализовать метод удаления первого элемент в списке.
      */
     public E delete() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
         Node<E> rst = this.first;
         this.first = rst.next;
         this.size--;
