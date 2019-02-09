@@ -23,6 +23,7 @@ public class DynamicLinkedListTest {
         linkedList = new DynamicLinkedList<>();
         linkedList.add(1);
         linkedList.add(2);
+        linkedList.add(3);
     }
 
     @Test
@@ -33,7 +34,7 @@ public class DynamicLinkedListTest {
     @Test
     public void whenAddElement() {
         linkedList.add(4);
-        assertThat(linkedList.get(2), is(4));
+        assertThat(linkedList.get(3), is(4));
     }
 
     @Test
@@ -43,6 +44,8 @@ public class DynamicLinkedListTest {
         assertThat(it.next(), is(1));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(3));
         assertThat(it.hasNext(), is(false));
     }
 
@@ -52,5 +55,20 @@ public class DynamicLinkedListTest {
         it.next();
         linkedList.add(6);
         it.next();
+    }
+
+    @Test
+    public void whenDeleteFirstElement(){
+        assertThat(linkedList.getSize(), is(3));
+        assertThat(linkedList.deleteFirst(), is(1));
+        assertThat(linkedList.get(0), is(2));
+        assertThat(linkedList.getSize(), is(2));
+    }
+
+    @Test
+    public void whenDeleteLastElement(){
+        assertThat(linkedList.getSize(), is(3));
+        assertThat(linkedList.deleteLast(), is(3));
+        assertThat(linkedList.getSize(), is(2));
     }
 }

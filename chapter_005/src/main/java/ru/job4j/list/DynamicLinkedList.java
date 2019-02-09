@@ -53,9 +53,56 @@ public class DynamicLinkedList<E> implements Iterable<E> {
         return result.value;
     }
 
+    /**
+     * Удаляет первый элемент из списка.
+     *
+     * @return удаляемый элемент.
+     */
+    public E deleteFirst() {
+        if (this.size == 0) {
+            throw new NoSuchElementException();
+        }
+        Node<E> rst = this.first;
+        this.first = rst.next;
+        if (this.size != 1) {
+            this.first.prev = null;
+        }
+        this.size--;
+        this.modCount++;
+        return rst.value;
+    }
+
+    /**
+     * Удаляет последний элемент из списка.
+     *
+     * @return удаляемый элемент.
+     */
+    public E deleteLast() {
+        if (this.size == 0) {
+            throw new NoSuchElementException();
+        }
+        Node<E> rst = this.last;
+        this.last = rst.prev;
+        if (this.size != 1) {
+            this.last.next = null;
+        }
+        this.size--;
+        this.modCount++;
+        return rst.value;
+    }
+
+    /**
+     * Возвращает количество элементов в списке..
+     *
+     * @return size.
+     */
+    public int getSize() {
+        return size;
+    }
+
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
+        return new Iterator<>() {
 
             private int itIndex = 0;
 
