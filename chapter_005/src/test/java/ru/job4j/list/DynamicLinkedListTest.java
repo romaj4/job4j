@@ -58,7 +58,7 @@ public class DynamicLinkedListTest {
     }
 
     @Test
-    public void whenDeleteFirstElement(){
+    public void whenDeleteFirstElement() {
         assertThat(linkedList.getSize(), is(3));
         assertThat(linkedList.deleteFirst(), is(1));
         assertThat(linkedList.get(0), is(2));
@@ -66,7 +66,7 @@ public class DynamicLinkedListTest {
     }
 
     @Test
-    public void whenDeleteLastElement(){
+    public void whenDeleteLastElement() {
         assertThat(linkedList.getSize(), is(3));
         assertThat(linkedList.deleteLast(), is(3));
         assertThat(linkedList.getSize(), is(2));

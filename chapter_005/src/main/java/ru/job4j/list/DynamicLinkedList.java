@@ -108,6 +108,8 @@ public class DynamicLinkedList<E> implements Iterable<E> {
 
             private int expectedModCount = modCount;
 
+            private Node<E> iterElement = first;
+
             @Override
             public boolean hasNext() {
                 return this.itIndex < size;
@@ -121,7 +123,10 @@ public class DynamicLinkedList<E> implements Iterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return get(itIndex++);
+                E rst = iterElement.value;
+                iterElement = iterElement.next;
+                itIndex++;
+                return rst;
             }
         };
     }
