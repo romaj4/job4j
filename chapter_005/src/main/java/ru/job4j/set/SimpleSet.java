@@ -27,17 +27,27 @@ public class SimpleSet<E> implements Iterable<E> {
      * @param value - значение.
      */
     public void add(E value) {
-        boolean isValue = false;
-        for (E e : this.simpleSet) {
-            if (e.equals(value)) {
-                isValue = true;
-                break;
-            }
-        }
-        if (!isValue) {
+        if (!this.isValue(value)) {
             this.simpleSet.add(value);
             this.size++;
         }
+    }
+
+    /**
+     * Проверяет есть ли такой элемент в коллекции.
+     *
+     * @param value значение.
+     * @return result.
+     */
+    public boolean isValue(E value) {
+        boolean rst = false;
+        for (E e : this.simpleSet) {
+            if (e.equals(value)) {
+                rst = true;
+                break;
+            }
+        }
+        return rst;
     }
 
     /**
