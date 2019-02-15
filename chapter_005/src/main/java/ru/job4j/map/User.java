@@ -27,4 +27,12 @@ public class User {
                 + ", children: " + children
                 + ", birthday: " + birthday.toInstant();
     }
+
+    @Override
+    public int hashCode() {
+        int result = 17 + this.children;
+        result = 31 * result + this.name.hashCode();
+        result = 31 * result + this.birthday.hashCode();
+        return result;
+    }
 }
