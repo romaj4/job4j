@@ -29,10 +29,16 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
-        int result = 17 + this.children;
-        result = 31 * result + this.name.hashCode();
-        result = 31 * result + this.birthday.hashCode();
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return this.children == user.children
+                && this.name.equals(user.name)
+                && this.birthday.equals(user.birthday);
     }
 }
