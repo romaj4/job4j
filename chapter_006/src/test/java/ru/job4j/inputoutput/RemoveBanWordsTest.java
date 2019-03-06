@@ -27,9 +27,9 @@ public class RemoveBanWordsTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         new RemoveBanWords().dropAbuses(inputStream, outputStream, abuses);
         assertThat(outputStream.toString(), is(new StringBuilder()
-                .append("One three " + this.ln)
-                .append("five six " + this.ln)
-                .append("seven eight " + this.ln)
+                .append("One three ")
+                .append("five six ")
+                .append("seven eight")
                 .toString()));
     }
 }
