@@ -52,4 +52,11 @@ public class SearchTest {
         Search search = new Search();
         assertThat(search.files(PATH, new ArrayList<>()).size(), is(0));
     }
+
+    @Test
+    public void whenSearchAllFilesWithoutSpecifiedThenListResult() {
+        Search search = new Search();
+        List<String> searchList = Arrays.asList(".java", ".pdf");
+        assertThat(search.allFiles(PATH, searchList).size(), is(6));
+    }
 }

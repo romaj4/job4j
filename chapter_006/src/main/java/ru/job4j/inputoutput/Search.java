@@ -38,6 +38,33 @@ public class Search {
     }
 
     /**
+     * Возвращает список всех файлов, кроме указанных.
+     *
+     * @param parent путь до каталога.
+     * @param exts   расширения файлов.
+     * @return список файлов.
+     */
+    public List<File> allFiles(String parent, List<String> exts) {
+        List<File> rst = new ArrayList<>();
+        Queue<File> data = new LinkedList<>();
+        File file = new File(parent);
+        if (file.exists()) {
+            data.offer(file);
+            while (!data.isEmpty()) {
+                File dirFile = data.poll();
+                for (File checkFile : dirFile.listFiles()) {
+                    if (checkFile.isDirectory()) {
+                        data.offer(checkFile);
+                    } else if (!exts.contains(this.getExtension(checkFile))) {
+                        rst.add(checkFile);
+                    }
+                }
+            }
+        }
+        return rst;
+    }
+
+    /**
      * Возвращает расширение файла.
      *
      * @param file файл.
