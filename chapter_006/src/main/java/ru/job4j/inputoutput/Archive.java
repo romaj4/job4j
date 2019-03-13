@@ -16,12 +16,11 @@ import java.util.zip.ZipOutputStream;
 public class Archive {
 
     public static void main(String[] args) {
-        if (Args.checkCommand(args)) {
-            Args arg = new Args(args);
-            new Archive().archive(arg.getDirectory(), arg.getExclude(), arg.getOutput());
-        } else {
-            System.out.println("Неверные аргументы командной строки");
+        Args arg = new Args(args);
+        if (!arg.isValid()) {
+            throw new IllegalArgumentException("Invalid arguments");
         }
+        new Archive().archive(arg.getDirectory(), arg.getExclude(), arg.getOutput());
     }
 
     /**

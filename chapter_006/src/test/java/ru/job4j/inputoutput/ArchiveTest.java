@@ -18,7 +18,7 @@ import java.util.zip.ZipInputStream;
 public class ArchiveTest {
 
     @Test
-    public void test() {
+    public void whenZipSomeDir() {
         String[] arg = {"-d", "C:/projects/job4j/chapter_006", "-e", ".xml", "-o", "C:/projects/project.zip"};
         Archive.main(arg);
         try (ZipInputStream zipIn = new ZipInputStream(
@@ -27,10 +27,14 @@ public class ArchiveTest {
             while ((zipEntry = zipIn.getNextEntry()) != null) {
                 Assert.assertNotEquals(zipEntry.getName(), "pom.xml");
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenInvalidArguments() {
+        String[] arg = {"-d", "C:/projects/job4j/chapter_006", "-k", ".xml", "-o", "C:/projects/project.zip"};
+        Archive.main(arg);
     }
 }

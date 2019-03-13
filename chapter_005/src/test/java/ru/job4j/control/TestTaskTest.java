@@ -30,6 +30,6 @@ public class TestTaskTest {
     public void whenFindDuplicatedSymbolsThenResult() {
         TestTask task = new TestTask();
         assertThat(task.duplicatedSymbols("параллелограмм").size(), is(4));
-        assertThat(task.duplicatedSymbols("мама"), is(2));
+        assertThat(task.duplicatedSymbols("мама").size(), is(2));
     }
 }

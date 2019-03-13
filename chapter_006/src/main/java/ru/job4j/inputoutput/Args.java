@@ -22,7 +22,7 @@ public class Args {
         this.args = args;
     }
 
-    public static boolean checkCommand(String[] args) {
+    public boolean isValid() {
         return args[0].equals(keyDir)
                 && args[2].equals(keyExt)
                 && args[args.length - 2].equals(keyOut);
