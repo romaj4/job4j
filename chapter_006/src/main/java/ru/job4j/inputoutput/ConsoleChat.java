@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -22,15 +19,15 @@ public class ConsoleChat {
 
     private boolean printRandomAnswer = true;
 
-    private final String stopWord = "стоп";
+    private static final String STOP_WORD = "стоп";
 
-    private final String continueWord = "продолжить";
+    private static final String CONTINUE_WORD = "продолжить";
 
-    private final String exitWord = "закончить";
+    private static final String EXIT_WORD = "закончить";
 
-    private final String answersFile = "c:/projects/job4j/chapter_006/src/main/resources/answers.txt";
+    private final String answersFile = "chapter_006/src/main/resources/answers.txt";
 
-    private final String logFile = "c:/projects/job4j/chapter_006/consolechat.log";
+    private final String logFile = "chapter_006/consolechat.log";
 
     /**
      * Создает консольный чат.
@@ -40,7 +37,7 @@ public class ConsoleChat {
         List<String> answersList = this.createAnswersList(this.answersFile);
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
-        while (!str.equals(this.exitWord)) {
+        while (!str.equals(EXIT_WORD)) {
             checkWord(str);
             String answer = answersList.get((int) (Math.random() * answersList.size()));
             if (this.printRandomAnswer) {
@@ -98,10 +95,10 @@ public class ConsoleChat {
      * @param word вводимое пользователем слово.
      */
     public void checkWord(String word) {
-        if (word.equals(this.stopWord)) {
+        if (word.equals(STOP_WORD)) {
             this.printRandomAnswer = false;
         }
-        if (word.equals(this.continueWord)) {
+        if (word.equals(CONTINUE_WORD)) {
             this.printRandomAnswer = true;
         }
     }
