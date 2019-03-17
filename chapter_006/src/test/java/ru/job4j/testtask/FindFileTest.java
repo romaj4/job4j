@@ -1,5 +1,6 @@
 package ru.job4j.testtask;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
 
 public class FindFileTest {
 
+    @Ignore
     @Test
     public void whenFindFilesByMaskThenResult() throws IOException {
         String[] args = {"-d", "C:/projects/job4j/chapter_006",
@@ -21,6 +23,7 @@ public class FindFileTest {
         assertThat(lines.size(), is(18));
     }
 
+    @Ignore
     @Test
     public void whenFindFilesByFullNameThenResult() throws IOException {
         String[] args = {"-d", "C:/projects/job4j/chapter_006",
