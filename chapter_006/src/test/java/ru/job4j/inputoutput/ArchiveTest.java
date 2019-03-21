@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -18,23 +17,20 @@ import java.util.zip.ZipInputStream;
 public class ArchiveTest {
 
     @Test
-    public void whenZipSomeDir() {
-        String[] arg = {"-d", "C:/projects/job4j/chapter_006", "-e", ".xml", "-o", "C:/projects/project.zip"};
+    public void whenZipSomeDir() throws IOException {
+        String[] arg = {"-d", "src", "-e", ".txt", "-o", "target/project.zip"};
         Archive.main(arg);
-        try (ZipInputStream zipIn = new ZipInputStream(
-                new FileInputStream(new File("C:/projects/project.zip")))) {
-            ZipEntry zipEntry;
-            while ((zipEntry = zipIn.getNextEntry()) != null) {
-                Assert.assertNotEquals(zipEntry.getName(), "pom.xml");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        ZipInputStream zipIn = new ZipInputStream(
+                new FileInputStream(new File(arg[5])));
+        ZipEntry zipEntry;
+        while ((zipEntry = zipIn.getNextEntry()) != null) {
+            Assert.assertNotEquals(zipEntry.getName(), "src\\main\\resources\\log.txt");
         }
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenInvalidArguments() {
-        String[] arg = {"-d", "C:/projects/job4j/chapter_006", "-k", ".xml", "-o", "C:/projects/project.zip"};
+        String[] arg = {"-d", "src", "-k", ".xml", "-o", "target/project.zip"};
         Archive.main(arg);
     }
 }
