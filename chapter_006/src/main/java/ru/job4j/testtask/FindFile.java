@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class FindFile {
 
+    private static final String LN = System.lineSeparator();
+
     /**
      * Параметры командной строки.
      */
@@ -29,14 +31,13 @@ public class FindFile {
     @Parameter(names = "-f", description = "Find by full fileToFind")
     private boolean findByFullName = false;
 
-    private static final String LN = System.lineSeparator();
-
     public static void main(String[] args) {
         FindFile file = new FindFile();
         try {
             JCommander.newBuilder().addObject(file).build().parse(args);
         } catch (Exception e) {
-            System.out.println("Команда введена неверно");
+            file.showHelp();
+            throw new IllegalArgumentException("Invalid arguments", e);
         }
         if (file.isValid(args)) {
             file.start();
