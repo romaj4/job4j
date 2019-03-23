@@ -35,4 +35,8 @@ public class Item {
     public void setId(String id) {
         this.id = id;
     }
+
+    public void setCreate(long create) {
+        this.create = create;
+    }
 }
