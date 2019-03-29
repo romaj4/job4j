@@ -220,9 +220,4 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         }
         return item;
     }
-
-    public static void main(String[] args) {
-        TrackerSQL tracker = new TrackerSQL();
-        tracker.add(new Item("wefw", "wefefwf"));
-    }
 }
