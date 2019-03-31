@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -106,41 +105,18 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public boolean replace(String id, Item item) {
-        boolean rst = this.isExist(Integer.parseInt(id));
-        if (rst) {
-            try (PreparedStatement prst = this.connection.prepareStatement(
-                    "update items set name = ?, description = ?, created = ? where id = ?;")) {
-                prst.setString(1, item.getName());
-                prst.setString(2, item.getDescription());
-                prst.setLong(3, item.getCreate());
-                prst.setInt(4, Integer.parseInt(id));
-                prst.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return rst;
-    }
-
-    /**
-     * Существует ли заявка с таким id.
-     *
-     * @param id id.
-     * @return результат.
-     */
-    public boolean isExist(int id) {
-        boolean rst = false;
+        int rst = 0;
         try (PreparedStatement prst = this.connection.prepareStatement(
-                "SELECT EXISTS(SELECT id FROM items WHERE id = ?)")) {
-            prst.setInt(1, id);
-            ResultSet resultSet = prst.executeQuery();
-            if (resultSet.next()) {
-                rst = resultSet.getBoolean(1);
-            }
+                "update items set name = ?, description = ?, created = ? where id = ?;")) {
+            prst.setString(1, item.getName());
+            prst.setString(2, item.getDescription());
+            prst.setLong(3, item.getCreate());
+            prst.setInt(4, Integer.parseInt(id));
+            rst = prst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return rst;
+        return rst == 1;
     }
 
     /**
@@ -151,17 +127,16 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public boolean delete(String id) {
-        boolean rst = this.isExist(Integer.parseInt(id));
-        if (rst) {
-            try (PreparedStatement prst = this.connection.prepareStatement(
-                    "delete from items where id = ?")) {
-                prst.setInt(1, Integer.parseInt(id));
-                prst.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        int rst = 0;
+        try (PreparedStatement prst = this.connection.prepareStatement(
+                "delete from items where id = ?")) {
+            prst.setInt(1, Integer.parseInt(id));
+            rst = prst.executeUpdate();
+            System.out.println(rst);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return rst;
+        return rst == 1;
     }
 
     /**
@@ -194,7 +169,21 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public List<Item> findByName(String name) {
-        return this.findAll().stream().filter(item -> item.getName().equals(name)).collect(Collectors.toList());
+        List<Item> itemsList = new ArrayList<>();
+        try (PreparedStatement prst = this.connection.prepareStatement(
+                "SELECT * FROM items WHERE name = ?")) {
+            prst.setString(1, name);
+            ResultSet resultSet = prst.executeQuery();
+            while (resultSet.next()) {
+                Item item = new Item(resultSet.getString("name"), resultSet.getString("description"));
+                item.setId(String.valueOf(resultSet.getInt("id")));
+                item.setCreate(resultSet.getLong("created"));
+                itemsList.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemsList;
     }
 
     /**
