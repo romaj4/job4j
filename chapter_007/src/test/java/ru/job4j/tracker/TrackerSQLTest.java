@@ -1,59 +1,66 @@
 package ru.job4j.tracker;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class TrackerSQLTest {
 
-    private TrackerSQL tracker;
+    public Connection init() {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            return DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
 
-    private Item testItem;
-
-    @Before
-    public void setUp() {
-        this.tracker = new TrackerSQL();
-        this.testItem = new Item("testName", "testDesc");
-        this.tracker.add(testItem);
-    }
-
-    @After
-    public void clear() {
-        this.tracker.dropTable();
-    }
-
-    @Test
-    public void whenAddItemThenIncrSize() {
-        this.tracker.add(new Item("name1", "desc1"));
-        assertThat(this.tracker.findAll().size(), is(2));
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Test
-    public void whenReplaceItem() {
-        Item item = new Item("name1", "desc1");
-        this.tracker.replace("1", item);
-        assertThat(this.tracker.findAll().get(0).getName(), is("name1"));
+    public void whenAddItemThenIncrSize() throws Exception {
+        try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
+            tracker.add(new Item("name", "desc"));
+            assertThat(tracker.findByName("name").size(), is(1));
+        }
     }
 
     @Test
-    public void whenDeleteItemThenDecrSize() {
-        this.tracker.delete("1");
-        assertThat(this.tracker.findAll().size(), is(0));
+    public void whenReplaceItem() throws Exception {
+        try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
+            tracker.add(new Item("name", "desc"));
+            Item item = new Item("name1", "desc1");
+            tracker.replace(tracker.findByName("name").get(0).getId(), item);
+            assertThat(tracker.findAll().get(0).getName(), is("name1"));
+        }
     }
 
     @Test
-    public void whenFindByNameThenResult() {
-        this.tracker.add(new Item("name1", "desc1"));
-        this.tracker.add(new Item("name1", "desc2"));
-        assertThat(this.tracker.findByName("name1").size(), is(2));
+    public void whenDeleteItemThenDecrSize() throws Exception {
+        try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
+            tracker.add(new Item("name", "desc"));
+            tracker.delete(tracker.findByName("name").get(0).getId());
+            assertThat(tracker.findAll().size(), is(0));
+        }
     }
 
     @Test
-    public void whenFindByIdThenResult() {
-        this.tracker.add(new Item("name1", "desc1"));
-        assertThat(this.tracker.findById("2").getName(), is("name1"));
+    public void whenFindByNameThenResult() throws Exception {
+        try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
+            tracker.add(new Item("name1", "desc1"));
+            tracker.add(new Item("name1", "desc2"));
+            assertThat(tracker.findByName("name1").size(), is(2));
+        }
     }
 }
