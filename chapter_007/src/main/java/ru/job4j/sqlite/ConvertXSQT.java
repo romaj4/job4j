@@ -15,11 +15,11 @@ import java.io.File;
  */
 public class ConvertXSQT {
 
-    private File dest;
+    private final File dest;
 
-    private File scheme;
+    private final File scheme;
 
-    private XmlUsage xmlUsage;
+    private final XmlUsage xmlUsage;
 
     public ConvertXSQT(File dest, File scheme, XmlUsage xmlUsage) {
         this.dest = dest;
@@ -50,12 +50,5 @@ public class ConvertXSQT {
 
     public File getDest() {
         return dest;
-    }
-
-    public static void main(String[] args) {
-        XmlUsage xmlUsage = new XmlUsage(new File("chapter_007/sqlite/xmlentry.xml"));
-        xmlUsage.save(new StoreSQL(7).load());
-        ConvertXSQT convertXSQT = new ConvertXSQT(new File("chapter_007/sqlite/xmlconverted.xml"),
-                new File("chapter_007/sqlite/scheme.xml"), xmlUsage);
     }
 }

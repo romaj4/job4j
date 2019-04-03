@@ -6,6 +6,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Roman Korolchuk (rom.kor@yandex.ru)
@@ -14,13 +16,13 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class ParseXml {
 
-    private int sum;
+    private final List<Integer> list = new ArrayList<>();
 
-    private ConvertXSQT convertXSQT;
+    private final ConvertXSQT convertXSQT;
 
     public ParseXml(ConvertXSQT convertXSQT) {
         this.convertXSQT = convertXSQT;
-        System.out.println(this.sumOfElements());
+        System.out.print(this.sumOfElements());
     }
 
     /**
@@ -32,13 +34,12 @@ public class ParseXml {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-
             DefaultHandler handler = new DefaultHandler() {
                 @Override
                 public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
                     if (qName.equalsIgnoreCase("entry")) {
                         String field = attributes.getValue("field");
-                        sum += Integer.parseInt(field);
+                        list.add(Integer.parseInt(field));
                     }
                 }
             };
@@ -46,10 +47,6 @@ public class ParseXml {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sum;
-    }
-
-    public int getSum() {
-        return sum;
+        return list.stream().mapToInt(i -> i).sum();
     }
 }

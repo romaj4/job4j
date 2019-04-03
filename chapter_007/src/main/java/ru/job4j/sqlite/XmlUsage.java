@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class XmlUsage {
 
-    private File target;
+    private final File target;
 
     public XmlUsage(File target) {
         this.target = target;

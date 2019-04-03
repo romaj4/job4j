@@ -15,7 +15,7 @@ public class StoreSQL implements AutoCloseable {
 
     private Connection connect;
 
-    private int size;
+    private final int size;
 
     public StoreSQL(int size) {
         this.config = new Config();
@@ -70,6 +70,7 @@ public class StoreSQL implements AutoCloseable {
 
     /**
      * Сохраняет данные из БД в list.
+     *
      * @return list.
      */
     public List<Entry> load() {
@@ -90,11 +91,5 @@ public class StoreSQL implements AutoCloseable {
         if (connect != null) {
             connect.close();
         }
-    }
-
-    public static void main(String[] args) {
-        StoreSQL storeSQL = new StoreSQL(12);
-        System.out.println(storeSQL.load().size());
-        System.out.println(storeSQL.config.getURL());
     }
 }
