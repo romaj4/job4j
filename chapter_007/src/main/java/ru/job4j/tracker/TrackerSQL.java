@@ -135,7 +135,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
                 "delete from items where id = ?")) {
             prst.setInt(1, Integer.parseInt(id));
             rst = prst.executeUpdate();
-            System.out.println(rst);
         } catch (SQLException e) {
             e.printStackTrace();
         }
