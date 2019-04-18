@@ -19,8 +19,7 @@ public class CalculatorTest {
     @Test
     public void whenAdd7And8Then15() {
         Calculator calc = new Calculator();
-        calc.add(7d, 8d);
-        double result = calc.getResult();
+        double result = calc.add(7d, 8d);
         double expected = 15d;
         assertThat(result, is(expected));
     }
@@ -28,8 +27,7 @@ public class CalculatorTest {
     @Test
     public void whenSubtract34And16Then18() {
         Calculator calc = new Calculator();
-        calc.subtract(34d, 16d);
-        double result = calc.getResult();
+        double result = calc.subtract(34d, 16d);
         double expected = 18d;
         assertThat(result, is(expected));
     }
@@ -37,8 +35,7 @@ public class CalculatorTest {
     @Test
     public void whenMultiply6And8Then48() {
         Calculator calc = new Calculator();
-        calc.multiply(6d, 8d);
-        double result = calc.getResult();
+        double result = calc.multiply(6d, 8d);
         double expected = 48d;
         assertThat(result, is(expected));
     }
@@ -46,8 +43,7 @@ public class CalculatorTest {
     @Test
     public void whenDiv12And4Then3() {
         Calculator calc = new Calculator();
-        calc.div(12d, 4d);
-        double result = calc.getResult();
+        double result = calc.div(12d, 4d);
         double expected = 3d;
         assertThat(result, is(expected));
     }
