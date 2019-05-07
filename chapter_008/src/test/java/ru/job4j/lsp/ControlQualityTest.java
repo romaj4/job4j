@@ -69,4 +69,28 @@ public class ControlQualityTest {
         assertThat(processing.getListFood().size(), is(1));
         assertThat(warehouseLowTemp.getListFood().size(), is(1));
     }
+
+    @Test
+    public void whenAddAndResortFoodsThenResult() {
+        Storage warehouse = new Warehouse();
+        Storage shop = new Shop(30);
+        Storage trash = new Trash();
+        ControlQuality controlQuality = new ControlQuality(Arrays.asList(warehouse, shop, trash));
+        List<Food> listFoods = Arrays.asList(
+                new Food("Fish", currentTime - 10 * dayMillis, currentTime + dayMillis, 100),
+                new Food("Apple", currentTime - 2 * dayMillis, currentTime + 10 * dayMillis, 300),
+                new Food("Orange", currentTime - 10 * dayMillis, currentTime + 2 * dayMillis, 400),
+                new Food("Banana", currentTime - 10 * dayMillis, currentTime - dayMillis, 400)
+        );
+        for (Food food : listFoods) {
+            controlQuality.qualityFood(food);
+        }
+        assertThat(warehouse.getListFood().size(), is(1));
+        assertThat(shop.getListFood().size(), is(2));
+        assertThat(trash.getListFood().size(), is(1));
+        controlQuality.resort();
+        assertThat(warehouse.getListFood().size(), is(1));
+        assertThat(shop.getListFood().size(), is(2));
+        assertThat(trash.getListFood().size(), is(1));
+    }
 }

@@ -1,5 +1,6 @@
 package ru.job4j.lsp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,20 @@ public class ControlQuality {
             if (storage.addFood(food)) {
                 break;
             }
+        }
+    }
+
+    /**
+     * Redistribution of products.
+     */
+    public void resort() {
+        List<Food> foods = new ArrayList<>();
+        for (Storage storage : this.listStorage) {
+            foods.addAll(storage.getListFood());
+            storage.getListFood().clear();
+        }
+        for (Food food : foods) {
+            this.qualityFood(food);
         }
     }
 }
