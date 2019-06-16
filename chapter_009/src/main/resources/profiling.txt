@@ -1,0 +1,22 @@
+Для профилирования приложения tracker из 2-го модуля использовал следующие инструменты:
+ - jps: чтобы узнать pid;
+ 
+ - jinfo: чтобы узнать настройки по умолчанию для приложения:
+	 jinfo -flags 3020
+	VM Flags:
+	-XX:CICompilerCount=3 -XX:ConcGCThreads=1 -XX:G1ConcRefinementThreads=4 -XX:G1HeapRegionSize=1048576 -XX:GCDrainStackTargetSize=64 -XX:Init
+	ialHeapSize=130023424 -XX:MarkStackSize=4194304 -XX:MaxHeapSize=2067791872 -XX:MaxNewSize=1240465408 -XX:MinHeapDeltaBytes=1048576 -XX:NonN
+	MethodCodeHeapSize=5830092 -XX:NonProfiledCodeHeapSize=122914074 -XX:ProfiledCodeHeapSize=122914074 -XX:ReservedCodeCacheSize=251658240 -XX
+	:+SegmentedCodeCache -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseFastUnorderedTimeStamps -XX:+UseG1GC -XX:-UseLargePages
+	IndividualAllocation
+	Видим что используется тип сборщика G1 GC;
+	
+ - jconsole: за наблюдением состоянием памяти(heap).
+ 
+ - VisualVM с установкой плагина VisualGC: также за наблюдением состоянием памяти, а также (с помощью плагина VisualGC) можно наблюдать за работой GC по регионам памяти.
+ 
+ С VisualVM работать удобнее, чем с jconsole.
+ При работе приложения с помощью VisualGC заметил, что GC срабатывает при заполнении региона памяти Eden Space. 
+ Но размер Eden Space постоянно меняется, и поэтому GC срабатывает при разных значениях(к примеру 1-й раз сработал при 10мб, потом 25мб, потом 50мб... потом может уменьшиться).
+ Причем меняется Eden Space ещё и в зависимости от количества созданных обьектов (когда я сразу создал 50000 заявок, то GC сработал намного позже чем когда запускал приложение с обычным консольным вводом).
+ Выходы за пределы памяти удалось достичь с помощью ключа -Xmx (на графике кривая использования памяти идет резко вверх и приложение падает с ошибкой).
