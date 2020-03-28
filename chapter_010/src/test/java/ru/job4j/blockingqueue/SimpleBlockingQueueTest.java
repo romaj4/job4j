@@ -17,7 +17,11 @@ public class SimpleBlockingQueueTest {
         });
         Thread consumer = new Thread(() -> {
             for (int i = 0; i < 9; i++) {
-                queue.poll();
+                try {
+                    queue.poll();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         int expectSize = 2;
@@ -38,12 +42,20 @@ public class SimpleBlockingQueueTest {
         });
         Thread consumer1 = new Thread(() -> {
             for (int i = 0; i < 9; i++) {
-                queue.poll();
+                try {
+                    queue.poll();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         Thread consumer2 = new Thread(() -> {
             for (int i = 0; i < 6; i++) {
-                queue.poll();
+                try {
+                    queue.poll();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         int expectSize = 3;

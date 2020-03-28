@@ -16,9 +16,9 @@ import java.util.Queue;
 public class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
-    private Queue<T> queue = new LinkedList<>();
+    private final Queue<T> queue = new LinkedList<>();
 
-    private int capacity;
+    private final int capacity;
 
     public SimpleBlockingQueue(int capacity) {
         this.capacity = capacity;
@@ -48,13 +48,9 @@ public class SimpleBlockingQueue<T> {
      *
      * @return result.
      */
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         while (this.queue.size() < 1) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            wait();
         }
         T result = this.queue.poll();
         notifyAll();
