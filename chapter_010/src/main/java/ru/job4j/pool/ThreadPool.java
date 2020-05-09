@@ -15,7 +15,7 @@ public class ThreadPool {
 
     private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(10);
 
-    private boolean isShutdown;
+    private volatile boolean isShutdown;
 
     public ThreadPool() {
         int poolSize = Runtime.getRuntime().availableProcessors();
@@ -43,5 +43,32 @@ public class ThreadPool {
     public void shutdown() {
         this.isShutdown = true;
         this.threads.forEach(Thread::interrupt);
+        for (Thread thread : this.threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+    }
+
+    public class ThreadFromQueue extends Thread {
+        private final SimpleBlockingQueue<Runnable> tasks;
+
+        public ThreadFromQueue(SimpleBlockingQueue<Runnable> tasks) {
+            this.tasks = tasks;
+        }
+
+        @Override
+        public void run() {
+            while (!this.isInterrupted()) {
+                try {
+                    this.tasks.poll().run();
+                } catch (InterruptedException e) {
+                    this.interrupt();
+                }
+            }
+        }
     }
 }
